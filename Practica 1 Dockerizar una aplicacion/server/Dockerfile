@@ -1,5 +1,5 @@
 # Selecciona la imagen base
-FROM node:16.14.0-alpine3.14
+FROM node:16.14-bullseye
 
 ENV NODE_ENV production
 
