@@ -6,13 +6,14 @@ services:
       - "3000:3000"
     environment:
       - AMQP_URL=amqp://guest:guest@rabbitmq:5672
-      - DB_USER="root"
-      - DB_PASS="password"
+      - DB_USER=root
+      - DB_PASS=my-secret-pass
       - MYSQLHOST=mysqldb
     depends_on:
       - rabbitmq
       - mysqldb
-    command: [ "./wait-for-it.sh", "mysqldb:3306", "--", "node", "./src/server.js" ]
+    command: [ "./wait-for-it.sh", "mysqldb:3306", "-t", "120" , "--", "node", "./src/server.js" ]
+  
   planner:
     image: luisb493/planner
     environment:
@@ -22,10 +23,12 @@ services:
       - rabbitmq
       - weatherservice
       - toposervice
+  
   weatherservice:
     image: luisb493/weatherservice
     ports:
       - "9090:9090"
+  
   toposervice:
     image: luisb493/toposervice
     ports:
@@ -36,15 +39,21 @@ services:
       - SPRING_DATA_MONGODB_DATABASE=topo
     depends_on:
       - mongodb
+  
   mysqldb:
-    image: mysql:8.0.28
+    image: mysql:8.0.28-oracle
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=my-secret-pass
       - MYSQL_DATABASE=eoloplantsDB
+      - MYSQL_USER=admin99,
+      - MYSQL_PASSWORD=password
+    expose:
+      - "3306"
     volumes:
       - ./mysql:/var/lib/mysql
+  
   mongodb:
     image: mongo:4.2.8
     ports:
@@ -53,7 +62,10 @@ services:
       - MONGO_INITDB_DATABASE=topo
     volumes:
       - ./mongo:/data/db
+  
   rabbitmq:
     image: rabbitmq:3.7.8
     ports:
       - "5672:5672"
+    expose:
+      - "5672"
