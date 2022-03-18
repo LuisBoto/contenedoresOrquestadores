@@ -30,7 +30,7 @@ WORKDIR /usr/src/plannerApp/
 COPY --from=builder /planner/target/*.jar /usr/src/plannerApp/
 
 # Indica el puerto que expone el contenedor
-EXPOSE 8080
+#EXPOSE 8080 # Planner doesnt expose any ports as it only communicates with rabbitmq
 
 # Comando que se ejecuta al hacer docker run
 CMD [ "java", "-jar", "planner-0.0.1-SNAPSHOT.jar" ]
