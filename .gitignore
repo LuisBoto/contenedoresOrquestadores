@@ -23,3 +23,8 @@
 hs_err_pid*
 .metadata/
 node_modules/
+.settings/
+target/
+.project
+.factorypath
+.classpath
