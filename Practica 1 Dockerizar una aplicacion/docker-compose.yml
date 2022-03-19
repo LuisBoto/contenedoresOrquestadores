@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   server:
-    image: luisb493/server
+    image: luisb493/server:latest
     ports:
       - "3000:3000"
     environment:
@@ -15,22 +15,25 @@ services:
     command: [ "./wait-for-it.sh", "mysqldb:3306", "-t", "120" , "--", "node", "./src/server.js" ]
   
   planner:
-    image: luisb493/planner
+    image: luisb493/planner:latest
     environment:
       - GRPC_CLIENT_WEATHERSERVER_ADDRESS=static://weatherservice:9090
-      - SPRING_CLOUD_STREAM_RABBIT_BINDER_NODES=rabbitmq:5672
+      - SPRING_CLOUD_STREAM_RABBIT_BINDER_NODES=guest:guest@rabbitmq:5672
+      - RABBITMQ_NODE_IP_ADDRESS=rabbitmq
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - TOPO_CLIENT_ADDRESS=toposervice:8181
     depends_on:
       - rabbitmq
       - weatherservice
       - toposervice
   
   weatherservice:
-    image: luisb493/weatherservice
+    image: luisb493/weatherservice:latest
     ports:
       - "9090:9090"
   
   toposervice:
-    image: luisb493/toposervice
+    image: luisb493/toposervice:latest
     ports:
       - "8181:8181"
     environment:
@@ -64,7 +67,7 @@ services:
       - ./mongo:/data/db
   
   rabbitmq:
-    image: rabbitmq:3.7.8
+    image: rabbitmq:3-management
     ports:
       - "5672:5672"
     expose:
