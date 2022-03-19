@@ -1,0 +1,32 @@
+version: "3.9"
+services: 
+  mysqldb:
+    image: mysql:8.0.28-oracle
+    network_mode: host
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pass
+      - MYSQL_DATABASE=eoloplantsDB
+      - MYSQL_USER=admin,
+      - MYSQL_PASSWORD=password
+    expose:
+      - "3306"
+  
+  mongodb:
+    image: mongo:4.2.8
+    network_mode: host
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+    environment:
+      - MONGO_INITDB_DATABASE=topo
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    network_mode: host
+    ports:
+      - "5672:5672"
+    expose:
+      - "5672"
