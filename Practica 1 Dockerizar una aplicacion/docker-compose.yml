@@ -18,8 +18,6 @@ services:
     image: luisb493/planner:latest
     environment:
       - GRPC_CLIENT_WEATHERSERVER_ADDRESS=static://weatherservice:9090
-      - SPRING_CLOUD_STREAM_RABBIT_BINDER_NODES=guest:guest@rabbitmq:5672
-      - RABBITMQ_NODE_IP_ADDRESS=rabbitmq
       - SPRING_RABBITMQ_HOST=rabbitmq
       - TOPO_CLIENT_ADDRESS=toposervice:8181
     depends_on:
