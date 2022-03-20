@@ -8,4 +8,6 @@ mvn -N io.takari:maven:wrapper
 ./mvnw compile jib:build -Dimage=miusuario/repositorio
 
 ## BuildPacks build
-pack build usuario/imagen --path . --builder gcr.io/buildpacks/builder:v1 //paketobuildpacks/builder:base **won't work**
+pack build usuario/imagen --path . --builder gcr.io/buildpacks/builder:v1 
+
+//paketobuildpacks/builder:base **won't work**
