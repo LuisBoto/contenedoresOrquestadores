@@ -1,18 +1,25 @@
-version: "3.9"
+version: "3.3"
 services: 
   mysqldb:
     image: mysql:8.0.28-oracle
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=eoloplantsDB
-    network_mode: "host" 
+    network_mode: host
+    expose:
+      - 3306
   
   mongodb:
     image: mongo:4.2.8
     environment:
       - MONGO_INITDB_DATABASE=topo
-    network_mode: "host" 
+    network_mode: host
+    expose:
+      - 27017
   
   rabbitmq:
     image: rabbitmq:3-management
-    network_mode: "host" 
+    network_mode: host
+    expose:
+      - 5672
+      - 15672
