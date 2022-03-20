@@ -12,5 +12,5 @@ cuenta con imágenes mongoDB, mySQL y RabbitMQ para ofrecer servicios utilizados
 
 ## Lanzar la aplicación
 Para la ejecución de la aplicación se debe levantar el fichero docker-compose.yml, que incluye imágenes de los cuatros servicios principales de la aplicación,
-completos con variables de entorno para la adecuada comunicación entre ellos, así como el broker RabbitMQ y las bases de datos neecsarias. Dichas bases de datos
+completos con variables de entorno para la adecuada comunicación entre ellos, así como el broker RabbitMQ y las bases de datos necesarias. Dichas bases de datos
 hacen uso de volúmenes para persistir la información independientemente del ciclo de vida del contenedor.
