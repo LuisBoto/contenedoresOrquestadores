@@ -9,7 +9,9 @@
 		// Use -bullseye variants on local arm64/Apple Silicon.
 		"args": { "VARIANT": "16-bullseye" }
 	},
-
+	"runArgs": [
+		"--network=host",
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
 
