@@ -1,4 +1,4 @@
-# Practica 1 Dockerizar una aplicación
+# Practica 1 - Dockerizar una aplicación
 La aplicación consta de los servicios server, planner, weatherservice y toposervice. 
 Tanto server como planner cuentan con un fichero Dockerfile que permite construir la image docker correspondiente,
 mientras que weatherservice y toposervice estan preparados para construir una imagen docker haciendo uso de buildpacks y JIB respectivamente.
