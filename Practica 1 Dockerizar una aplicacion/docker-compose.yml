@@ -19,6 +19,7 @@ services:
     environment:
       - GRPC_CLIENT_WEATHERSERVER_ADDRESS=static://weatherservice:9090
       - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
       - TOPO_CLIENT_ADDRESS=toposervice:8181
     depends_on:
       - rabbitmq
