@@ -78,7 +78,7 @@ spec:
   ports:
   - port: 3306
 
-  ---
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -114,4 +114,6 @@ spec:
     app: rabbitmq
   ports:
   - port: 5672
+    name: rabbit-port
   - port: 15672
+    name: rabbit-management-plugin
