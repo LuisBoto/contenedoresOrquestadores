@@ -1,3 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: codeurjc/server:v1.0
+        env:
+        - name: MYSQL_HOST
+          value: mysql       
+        - name: MYSQL_DB
+          value: eoloplantsDB   
+        - name: MYSQL_USER
+          value: root   
+        - name: MYSQL_PASS
+          value: password   
+        - name: RABBITMQ_URL
+          value: amqp://root:password@rabbitmq   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  type: LoadBalancer
+  selector:
+    app: server
+  ports:
+  - port: 3000
+  
+
+######################
+
 version: '3.9'
 services:
   server:
