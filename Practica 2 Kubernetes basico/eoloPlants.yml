@@ -139,7 +139,7 @@ spec:
         - name: GRPC_HOST
           value: weatherservice   
         - name: GRPC_PORT
-          value: '9090'
+          value: "9090"
         
 ---
 apiVersion: v1
@@ -176,7 +176,7 @@ spec:
         - name: SPRING_DATA_MONGODB_HOST
           value: mongodb
         - name: SPRING_DATA_MONGODB_PORT
-          value: '27017'
+          value: "27017"
         - name: SPRING_DATA_MONGODB_DATABASE
           value: topoDB
         - name: SPRING_DATA_MONGODB_AUTHENTICATION-DATABASE
@@ -261,7 +261,7 @@ spec:
         - name: TOPO_HOST
           value: toposervice
         - name: TOPO_PORT
-          value: '8181'
+          value: "8181"
         # Enviroment variables for connect to WeatherService
         - name: GRPC_CLIENT_WEATHERSERVER_ADDRESS
           value: static://weatherservice:9090
@@ -271,9 +271,11 @@ spec:
         - name: SPRING_RABBITMQ_HOST
           value: rabbitmq
         - name: SPRING_RABBITMQ_PORT
-          value: '5672'
+          value: "5672"
         - name: SPRING_RABBITMQ_USERNAME
           value: root
         - name: SPRING_RABBITMQ_PASSWORD
           value: password
+        - name: SERVER_PORT
+          value: "3000"
         
