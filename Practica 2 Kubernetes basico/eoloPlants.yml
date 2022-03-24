@@ -137,7 +137,7 @@ spec:
         image: codeurjc/weatherservice:v1.0
         env:
         - name: GRPC_HOST
-          value: weatherservice   
+          value: localhost 
         - name: GRPC_PORT
           value: "9090"
         
@@ -186,7 +186,7 @@ spec:
         - name: SPRING_DATA_MONGODB_PASSWORD
           value: password
         - name: SERVER_PORT
-          value: "3000"
+          value: "8181"
         
 ---
 apiVersion: v1
@@ -280,4 +280,17 @@ spec:
           value: password
         - name: SERVER_PORT
           value: "3000"
-        
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: planner
+  labels:
+    app: planner
+spec:
+  type: ClusterIP
+  selector:
+    app: planner
+  ports:
+  - port: 3000
