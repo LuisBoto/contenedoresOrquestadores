@@ -137,7 +137,7 @@ spec:
         image: codeurjc/weatherservice:v1.0
         env:
         - name: GRPC_HOST
-          value: localhost 
+          value: 0.0.0.0
         - name: GRPC_PORT
           value: "9090"
         
