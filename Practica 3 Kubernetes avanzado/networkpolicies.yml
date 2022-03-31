@@ -2,11 +2,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny-ingress
+  name: default-deny
 spec:
   podSelector: {}
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -25,8 +26,13 @@ spec:
     ports:
     - port: 3306
       protocol: TCP
+  egress:
+  - ports:
+    - port: 3306
+      protocol: TCP
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -45,14 +51,19 @@ spec:
     ports:
     - port: 27017
       protocol: TCP  
+  egress:
+  - ports:
+    - port: 27017
+      protocol: TCP
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: rabbitmq2serverplanner
+  name: rabbitmq2server-planner
 spec:
   podSelector:
     matchLabels:
@@ -72,8 +83,15 @@ spec:
     ports:
     - port: 5672
       protocol: TCP
+  egress:
+  - ports:
+    - port: 5672
+      protocol: TCP
+    - port: 15672
+      protocol: TCP
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -89,8 +107,11 @@ spec:
     ports:
     - protocol: TCP
       port: 8181
+  egress:
+  - {}
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -109,14 +130,17 @@ spec:
     ports:
     - port: 9090
       protocol: TCP
+  egress:
+  - {}
   policyTypes:
   - Ingress
+  - Egress
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: server-ingress-policy
+  name: server-policy
 spec:
   podSelector:
     matchLabels:
@@ -126,8 +150,24 @@ spec:
     ports:
     - protocol: TCP
       port: 3000
+  egress:
+  - {}
   policyTypes:
   - Ingress
+  - Egress
 
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: planner-egress-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: planner
+  egress:
+  - {}
+  policyTypes:
+  - Egress
 
 
