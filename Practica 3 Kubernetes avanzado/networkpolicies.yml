@@ -30,7 +30,86 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: server2mysql-rabbit
+  name: mongo2toposervice
+spec:
+  podSelector:
+    matchLabels:
+      app: mongodb
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: toposervice
+    ports:
+    - port: 27017
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: rabbitmq2serverplanner
+spec:
+  podSelector:
+    matchLabels:
+      app: rabbitmq
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server
+    ports:
+    - port: 5672
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: planner
+    ports:
+    - port: 5672
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: toposervice2planner
+spec:
+  podSelector:
+    matchLabels:
+      app: toposervice
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: planner
+    ports:
+    - port: 8181
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: weatherservice2planner
+spec:
+  podSelector:
+    matchLabels:
+      app: weatherservice
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: planner
+    ports:
+    - port: 9090
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: server-ingress
 spec:
   podSelector:
     matchLabels:
@@ -40,51 +119,6 @@ spec:
     ports:
     - protocol: TCP
       port: 3000
-  egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: mysql
-    ports:
-    - port: 3306
-      protocol: TCP
-  - to:
-    - podSelector:
-        matchLabels:
-          app: rabbitmq
-    ports:
-    - port: 5672
-      protocol: TCP
 
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: planner2rabbit-services
-spec:
-  podSelector:
-    matchLabels:
-      app: planner
-  egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: weatherservice
-    ports:
-    - port: 9090
-      protocol: TCP
-  - to:
-    - podSelector:
-        matchLabels:
-          app: toposervice
-    ports:
-    - port: 8181
-      protocol: TCP
-  - to:
-    - podSelector:
-        matchLabels:
-          app: rabbitmq
-    ports:
-    - port: 5672
-      protocol: TCP
+
 
