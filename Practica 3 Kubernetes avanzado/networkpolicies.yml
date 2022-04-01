@@ -150,8 +150,21 @@ spec:
     ports:
     - protocol: TCP
       port: 3000
+  - from: []
+    ports:
+    - protocol: TCP
+      port: 80
   egress:
-  - {}
+  - ports:
+    - port: 80
+    - port: 443
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+    - port: 3000
+    - port: 3306
+    - port: 5672
   policyTypes:
   - Ingress
   - Egress
