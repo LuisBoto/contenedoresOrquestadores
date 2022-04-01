@@ -2,17 +2,6 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  - Egress
-
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
   name: mysql2server
 spec:
   podSelector:
@@ -179,7 +168,10 @@ spec:
     matchLabels:
       app: planner
   egress:
-  - {}
+  - ports:
+    - port: 8181
+    - port: 9090
+    - port: 5672
   policyTypes:
   - Egress
 
