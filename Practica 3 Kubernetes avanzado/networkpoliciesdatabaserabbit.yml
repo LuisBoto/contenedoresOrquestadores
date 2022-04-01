@@ -1,0 +1,83 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mysql2server
+spec:
+  podSelector:
+    matchLabels:
+      app: mysql
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server
+    ports:
+    - port: 3306
+      protocol: TCP
+  egress:
+  - ports:
+    - port: 3306
+      protocol: TCP
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongo2toposervice
+spec:
+  podSelector:
+    matchLabels:
+      app: mongodb
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: toposervice
+    ports:
+    - port: 27017
+      protocol: TCP  
+  egress:
+  - ports:
+    - port: 27017
+      protocol: TCP
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: rabbitmq2server-planner
+spec:
+  podSelector:
+    matchLabels:
+      app: rabbitmq
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server
+    ports:
+    - port: 5672
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: planner
+    ports:
+    - port: 5672
+      protocol: TCP
+  egress:
+  - ports:
+    - port: 5672
+      protocol: TCP
+    - port: 15672
+      protocol: TCP
+  policyTypes:
+  - Ingress
+  - Egress
