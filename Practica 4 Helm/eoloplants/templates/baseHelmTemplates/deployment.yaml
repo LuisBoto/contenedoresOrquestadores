@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "planner.fullname" . }}
+  name: {{ include "eoloplants.fullname" . }}
   labels:
-    {{- include "planner.labels" . | nindent 4 }}
+    {{- include "eoloplants.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "planner.selectorLabels" . | nindent 6 }}
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "planner.selectorLabels" . | nindent 8 }}
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "planner.serviceAccountName" . }}
+      serviceAccountName: {{ include "eoloplants.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "planner.fullname" . }}
+  name: {{ include "eoloplants.fullname" . }}
   labels:
-    {{- include "planner.labels" . | nindent 4 }}
+    {{- include "eoloplants.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "planner.fullname" . }}
+    name: {{ include "eoloplants.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
