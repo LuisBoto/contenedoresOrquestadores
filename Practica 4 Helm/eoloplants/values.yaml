@@ -1,9 +1,11 @@
 servicetopo:
   type: ClusterIP
   port: 8181
+  name: toposervice-service
 serviceserver:
   type: ClusterIP
   port: 3000
+  name: server-service
 
 ingress:
   enabled: true

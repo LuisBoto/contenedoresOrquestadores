@@ -46,13 +46,13 @@ metadata:
     app: toposervice
 spec:
   ports:
-  - port: 8181
+  - port: {{ .Values.servicetopo.port }}
     targetPort: 8181
     protocol: TCP
     name: topo-port
   selector:
     app: toposervice
-  type: ClusterIP
+  type: {{ .Values.servicetopo.type }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
