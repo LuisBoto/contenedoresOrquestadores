@@ -10,4 +10,4 @@ spec:
   capacity:
     storage: 1Gi
   hostPath:
-    path: /db/mongo
+    path: /{{ $fullName }}/db/mongo
