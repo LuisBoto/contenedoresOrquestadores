@@ -8,8 +8,9 @@ serviceserver:
 ingress:
   enabled: true
   className: ""
-  annotations:
-  - nginx.ingress.kubernetes.io/rewrite-target: /$1
+  annotations: {
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  }
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
