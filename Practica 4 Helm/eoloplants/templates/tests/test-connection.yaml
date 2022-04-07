@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "eoloplants.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "eoloplants.fullname" . }}:{{ .Values.serviceserver.port }}']
   restartPolicy: Never
