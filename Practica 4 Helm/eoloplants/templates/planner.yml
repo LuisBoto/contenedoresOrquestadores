@@ -1,39 +1,40 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: planner-deploy
+  name: {{ $fullName }}-planner-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: planner
+      app: {{ $fullName }}-planner
   replicas: 1
   template:
     metadata:
       labels:
-        app: planner
+        app: {{ $fullName }}-planner
         dns-policy: enabled
     spec:
       securityContext:
         runAsUser: 1001
       restartPolicy: Always
       containers:
-      - name: planner
+      - name: {{ $fullName }}-planner
         image: {{ .Values.images.planner.repository }}:{{ .Values.images.planner.tag }} 
         imagePullPolicy: {{ .Values.images.planner.pullPolicy }}
         env:
         - name: TOPO_HOST
-          value: toposervice-service
+          value: {{ $fullName }}-toposervice-service
         - name: TOPO_PORT
           value: "8181"
         - name: GRPC_CLIENT_WEATHERSERVER_ADDRESS
-          value: static://weatherservice-service:9090
+          value: static://{{ $fullName }}-weatherservice-service:9090
         - name: SPRING_CLOUD_STREAM_RABBIT_BINDER_NODES
-          value: rabbitmq-service:5672
+          value: {{ $fullName }}-rabbitmq-service:5672
         - name: SPRING_RABBITMQ_HOST
-          value: rabbitmq-service
+          value: {{ $fullName }}-rabbitmq-service
         - name: SPRING_RABBITMQ_PORT
           value: "5672"
         - name: SPRING_RABBITMQ_USERNAME
@@ -44,30 +45,30 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: planner-to-rabbit-weather-topo
+  name: {{ $fullName }}-planner-to-rabbit-weather-topo
 spec:
   podSelector:
     matchLabels:
-      app: planner
+      app: {{ $fullName }}-planner
   egress:
   - to:
     - podSelector:
         matchLabels:
-          app: rabbitmq
+          app: {{ $fullName }}-rabbitmq
     ports:
     - port: 5672
       protocol: TCP
   - to:
     - podSelector:
         matchLabels:
-          app: weatherservice
+          app: {{ $fullName }}-weatherservice
     ports:
     - port: 9090
       protocol: TCP
   - to:
     - podSelector:
         matchLabels:
-          app: toposervice
+          app: {{ $fullName }}-toposervice
     ports:
     - port: 8081
       protocol: TCP

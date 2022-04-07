@@ -1,25 +1,26 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: weatherservice-deploy
+  name: {{ $fullName }}-weatherservice-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: weatherservice
+      app: {{ $fullName }}-weatherservice
   replicas: 1
   template:
     metadata:
       labels:
-        app: weatherservice
+        app: {{ $fullName }}-weatherservice
     spec:
       securityContext:
         runAsUser: 1001
       restartPolicy: Always
       containers:
-      - name: weatherservice
+      - name: {{ $fullName }}-weatherservice
         image: {{ .Values.images.weatherservice.repository }}:{{ .Values.images.weatherservice.tag }}
         imagePullPolicy: {{ .Values.images.weatherservice.pullPolicy }}
         env:
@@ -35,32 +36,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: weatherservice-service
+  name: {{ $fullName }}-weatherservice-service
   labels:
-    app: weatherservice
+    app: {{ $fullName }}-weatherservice
 spec:
   ports:
   - port: 9090
     targetPort: 9090
     protocol: TCP
-    name: weatherservice-port
+    name: {{ $fullName }}-weatherservice-port
   selector:
-    app: weatherservice
+    app: {{ $fullName }}-weatherservice
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: weather-from-planner
+  name: {{ $fullName }}-weather-from-planner
 spec:
   podSelector:
     matchLabels:
-      app: weatherservice
+      app: {{ $fullName }}-weatherservice
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: planner
+          app: {{ $fullName }}-planner
     ports:
     - port: 9090
       protocol: TCP

@@ -1,8 +1,9 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny
+  name: {{ $fullName }}-default-deny
 spec:
   podSelector: {}
   policyTypes:
@@ -12,7 +13,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: dns-egress
+  name: {{ $fullName }}-dns-egress
 spec:
   podSelector:
     matchLabels:

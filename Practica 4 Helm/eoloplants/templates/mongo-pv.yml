@@ -1,9 +1,10 @@
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv
+  name: {{ $fullName }}-mongo-pv
 spec:
-  storageClassName: mongo
+  storageClassName: {{ $fullName }}-mongo
   accessModes:
     - ReadWriteOnce
   capacity:

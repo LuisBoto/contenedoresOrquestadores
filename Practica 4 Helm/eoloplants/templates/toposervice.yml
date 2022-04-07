@@ -1,31 +1,32 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: toposervice-deploy
+  name: {{ $fullName }}-toposervice-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: toposervice
+      app: {{ $fullName }}-toposervice
   replicas: 1
   template:
     metadata:
       labels:
-        app: toposervice
+        app: {{ $fullName }}-toposervice
         dns-policy: enabled
     spec:
       securityContext:
         runAsUser: 1001
       restartPolicy: Always
       containers:
-      - name: toposervice
+      - name: {{ $fullName }}-toposervice
         image: {{ .Values.images.toposervice.repository }}:{{ .Values.images.toposervice.tag }} 
         imagePullPolicy: {{ .Values.images.toposervice.pullPolicy }}
         env:
         - name: SPRING_DATA_MONGODB_HOST
-          value: mongodb-service
+          value: {{ $fullName }}-mongodb-service
         - name: SPRING_DATA_MONGODB_PORT
           value: "27017"
         - name: SPRING_DATA_MONGODB_DATABASE
@@ -42,32 +43,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: toposervice-service
+  name: {{ $fullName }}-toposervice-service
   labels:
-    app: toposervice
+    app: {{ $fullName }}-toposervice
 spec:
   ports:
   - port: {{ .Values.servicetopo.port }}
     targetPort: 8181
     protocol: TCP
-    name: topo-port
+    name: {{ $fullName }}-topo-port
   selector:
-    app: toposervice
+    app: {{ $fullName }}-toposervice
   type: {{ .Values.servicetopo.type }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: topo-to-mongodb
+  name: {{ $fullName }}-topo-to-mongodb
 spec:
   podSelector:
     matchLabels:
-      app: toposervice
+      app: {{ $fullName }}-toposervice
   egress:
   - to:
     - podSelector:
         matchLabels:
-          app: mongodb
+          app: {{ $fullName }}-mongodb
     ports:
     - port: 27017
       protocol: TCP
@@ -75,16 +76,16 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: topo-from-planner-ingress
+  name: {{ $fullName }}-topo-from-planner-ingress
 spec:
   podSelector:
     matchLabels:
-      app: toposervice
+      app: {{ $fullName }}-toposervice
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: planner
+          app: {{ $fullName }}-planner
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: ingress-nginx

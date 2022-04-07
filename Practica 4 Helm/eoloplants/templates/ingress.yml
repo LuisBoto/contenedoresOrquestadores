@@ -14,7 +14,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-multi-ingress
   labels:
     {{- include "eoloplants.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -48,11 +48,11 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ .backservicename }}
+                name: {{ $fullName }}-{{ .backservicename }}
                 port:
                   number: {{ .backserviceport }}
               {{- else }}
-              serviceName: {{ .backservicename }}
+              serviceName: {{ $fullName }}-{{ .backservicename }}
               servicePort: {{ .backserviceport }}
               {{- end }}
           {{- end }}

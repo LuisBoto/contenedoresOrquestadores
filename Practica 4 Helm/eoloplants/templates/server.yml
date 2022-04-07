@@ -1,35 +1,36 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-deploy
+  name: {{ $fullName }}-server-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: server
+      app: {{ $fullName }}-server
   replicas: 1
   template:
     metadata:
       labels:
-        app: server
+        app: {{ $fullName }}-server
         dns-policy: enabled
     spec:
       securityContext:
         runAsUser: 1001
       restartPolicy: Always
       containers:
-      - name: server
+      - name: {{ $fullName }}-server
         image: {{ .Values.images.server.repository }}:{{ .Values.images.server.tag }} 
         imagePullPolicy: {{ .Values.images.server.pullPolicy }}
         command: ["bash"]
         args:
         - "-c"
-        - "./wait-for-it.sh mysql-service:3306 -t 500 -- ./wait-for-it.sh rabbitmq-service:5672 -t 500 -- node src/server.js"
+        - "./wait-for-it.sh {{ $fullName }}-mysql-service:3306 -t 500 -- ./wait-for-it.sh {{ $fullName }}-rabbitmq-service:5672 -t 500 -- node src/server.js"
         env:
         - name: MYSQL_HOST
-          value: mysql-service
+          value: {{ $fullName }}-mysql-service
         - name: MYSQL_DB
           value: eoloplantsDB
         - name: MYSQL_USER
@@ -37,24 +38,24 @@ spec:
         - name: MYSQL_PASS
           value: password
         - name: RABBITMQ_URL
-          value: amqp://root:password@rabbitmq-service
+          value: amqp://root:password@{{ $fullName }}-rabbitmq-service
         ports:
         - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: server-service
+  name: {{ $fullName }}-server-service
   labels:
-    app: server
+    app: {{ $fullName }}-server
 spec:
   ports:
   - port: {{ .Values.serviceserver.port }}
     targetPort: 3000
     protocol: TCP
-    name: server-port
+    name: {{ $fullName }}-server-port
   selector:
-    app: server
+    app: {{ $fullName }}-server
   type: {{ .Values.serviceserver.type }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -64,19 +65,19 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: server
+      app: {{ $fullName }}-server
   egress:
   - to:
     - podSelector:
         matchLabels:
-          app: mysql
+          app: {{ $fullName }}-mysql
     ports:
     - port: 3306
       protocol: TCP
   - to:
     - podSelector:
         matchLabels:
-          app: rabbitmq
+          app: {{ $fullName }}-rabbitmq
     ports:
     - port: 5672
       protocol: TCP
@@ -84,11 +85,11 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: server-from-ingress
+  name: {{ $fullName }}-server-from-ingress
 spec:
   podSelector:
     matchLabels:
-      app: server
+      app: {{ $fullName }}-server
   ingress:
     - from:
       - namespaceSelector:

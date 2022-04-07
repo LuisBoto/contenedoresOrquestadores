@@ -1,22 +1,23 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deploy
+  name: {{ $fullName }}-mysql-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mysql
+      app: {{ $fullName }}-mysql
   replicas: 1
   template:
     metadata:
       labels:
-        app: mysql
+        app: {{ $fullName }}-mysql
     spec:
       containers:
-      - name: mysql
+      - name: {{ $fullName }}-mysql
         image: {{ .Values.images.mysql.repository }}:{{ .Values.images.mysql.tag }} 
         imagePullPolicy: {{ .Values.images.mysql.pullPolicy }}
         env:
@@ -28,18 +29,18 @@ spec:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: datadb
+          name: {{ $fullName }}-datadb
       volumes:
-      - name: datadb
+      - name: {{ $fullName }}-datadb
         persistentVolumeClaim:
-          claimName: mysql-pvc
+          claimName: {{ $fullName }}-mysql-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pvc
+  name: {{ $fullName }}-mysql-pvc
 spec:
-  storageClassName: mysql
+  storageClassName: {{ $fullName }}-mysql
   accessModes:
   - ReadWriteOnce
   resources:
@@ -49,32 +50,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
+  name: {{ $fullName }}-mysql-service
   labels:
-    app: mysql
+    app: {{ $fullName }}-mysql
 spec:
   ports:
   - port: 3306
     targetPort: 3306
     protocol: TCP
-    name: mysql-port
+    name: {{ $fullName }}-mysql-port
   selector:
-    app: mysql
+    app: {{ $fullName }}-mysql
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: mysql-from-server
+  name: {{ $fullName }}-mysql-from-server
 spec:
   podSelector:
     matchLabels:
-      app: mysql
+      app: {{ $fullName }}-mysql
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: server
+          app: {{ $fullName }}-server
     ports:
     - port: 3306
       protocol: TCP

@@ -1,9 +1,10 @@
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: rabbit-pv
+  name: {{ $fullName }}-rabbit-pv
 spec:
-  storageClassName: rabbit
+  storageClassName: {{ $fullName }}-rabbit
   accessModes:
   - ReadWriteOnce
   capacity:

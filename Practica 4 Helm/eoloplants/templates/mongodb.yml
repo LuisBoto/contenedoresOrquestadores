@@ -1,22 +1,23 @@
 ---
+{{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-deploy
+  name: {{ $fullName }}-mongodb-deploy
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: mongodb
+      app: {{ $fullName }}-mongodb
   replicas: 1
   template:
     metadata:
       labels:
-        app: mongodb
+        app: {{ $fullName }}-mongodb
     spec:
       containers:
-      - name: mongodb
+      - name: {{ $fullName }}-mongodb
         image: {{ .Values.images.mongo.repository }}:{{ .Values.images.mongo.tag }} 
         imagePullPolicy: {{ .Values.images.mongo.pullPolicy }}
         env:
@@ -32,18 +33,18 @@ spec:
         - containerPort: 27019
         volumeMounts:
         - mountPath: /data/db
-          name: datadb
+          name: {{ $fullName }}-datadb
       volumes:
-      - name: datadb
+      - name: {{ $fullName }}-datadb
         persistentVolumeClaim:
-          claimName: mongo-pvc
+          claimName: {{ $fullName }}-mongo-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pvc
+  name: {{ $fullName }}-mongo-pvc
 spec:
-  storageClassName: mongo
+  storageClassName: {{ $fullName }}-mongo
   accessModes:
   - ReadWriteOnce
   resources:
@@ -53,40 +54,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: {{ $fullName }}-mongodb-service
   labels:
-    app: mongodb
+    app: {{ $fullName }}-mongodb
 spec:
   ports:
   - port: 27017
     targetPort: 27017
     protocol: TCP
-    name: mongodb-port-27017
+    name: {{ $fullName }}-mongodb-port-27017
   - port: 27018
     targetPort: 27018
     protocol: TCP
-    name: mongodb-port-27018
+    name: {{ $fullName }}-mongodb-port-27018
   - port: 27019
     targetPort: 27019
     protocol: TCP
-    name: mongodb-port-27019
+    name: {{ $fullName }}-mongodb-port-27019
   selector:
-    app: mongodb
+    app: {{ $fullName }}-mongodb
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: mongodb-from-topo
+  name: {{ $fullName }}-mongodb-from-topo
 spec:
   podSelector:
     matchLabels:
-      app: mongodb
+      app: {{ $fullName }}-mongodb
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: toposervice
+          app: {{ $fullName }}-toposervice
     ports:
     - port: 27017
       protocol: TCP
