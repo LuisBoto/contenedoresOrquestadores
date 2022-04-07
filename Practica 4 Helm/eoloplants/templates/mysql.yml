@@ -1,5 +1,6 @@
 ---
 {{- $fullName := include "eoloplants.fullname" . -}}
+{{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -40,7 +41,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ $fullName }}-mysql-pvc
 spec:
+  {{- if $useExistingVolume }}
+  storageClassName: {{ $fullName }}-{{ .Values.persistence.mysql.storageClass }}
+  {{- else }}
   storageClassName: {{ $fullName }}-mysql
+  {{- end }}
   accessModes:
   - ReadWriteOnce
   resources:

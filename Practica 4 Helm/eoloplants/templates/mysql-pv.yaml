@@ -1,4 +1,6 @@
 {{- $fullName := include "eoloplants.fullname" . -}}
+{{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
+{{- if not $useExistingVolume -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -11,3 +13,4 @@ spec:
     storage: 1Gi
   hostPath:
     path: /{{ $fullName }}/db/mysql
+{{- end -}}

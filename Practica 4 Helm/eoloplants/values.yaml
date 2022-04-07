@@ -61,6 +61,15 @@ images:
     tag: "3.9-management"
     pullPolicy: IfNotPresent
 
+persistence:
+  useExistingVolumes: true
+  mysql:
+    storageClass: mysql-storageclass
+  mongo:
+    storageClass: mongo-storageclass
+  rabbitmq:
+    storageClass: rabbitmq-storageClass
+
 # Default values for eoloplants.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
