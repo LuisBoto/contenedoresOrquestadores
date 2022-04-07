@@ -74,6 +74,8 @@ spec:
   selector:
     app: {{ $fullName }}-mongodb
   type: ClusterIP
+
+{{- if .Values.useNetworkPolicies -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -91,3 +93,4 @@ spec:
     ports:
     - port: 27017
       protocol: TCP
+{{- end -}}

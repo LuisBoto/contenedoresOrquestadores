@@ -70,6 +70,8 @@ persistence:
   rabbitmq:
     storageClass: rabbitmq-storageClass
 
+useNetworkPolicies: true
+
 # Default values for eoloplants.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.

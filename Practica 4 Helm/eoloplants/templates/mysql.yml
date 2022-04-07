@@ -67,6 +67,8 @@ spec:
   selector:
     app: {{ $fullName }}-mysql
   type: ClusterIP
+
+{{- if .Values.useNetworkPolicies -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -84,3 +86,4 @@ spec:
     ports:
     - port: 3306
       protocol: TCP
+{{- end -}}

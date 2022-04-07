@@ -41,6 +41,8 @@ spec:
           value: root
         - name: SPRING_RABBITMQ_PASSWORD
           value: password
+
+{{- if .Values.useNetworkPolicies -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -70,5 +72,7 @@ spec:
         matchLabels:
           app: {{ $fullName }}-toposervice
     ports:
-    - port: 8081
+    - port: 8181
       protocol: TCP
+
+{{- end -}}

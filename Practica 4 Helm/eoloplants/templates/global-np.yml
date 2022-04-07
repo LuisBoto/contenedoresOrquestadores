@@ -1,3 +1,4 @@
+{{- if .Values.useNetworkPolicies -}}
 ---
 {{- $fullName := include "eoloplants.fullname" . -}}
 apiVersion: networking.k8s.io/v1
@@ -24,3 +25,5 @@ spec:
       protocol: UDP
     - port: 53
       protocol: TCP
+
+{{- end -}}

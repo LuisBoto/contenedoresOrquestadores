@@ -48,6 +48,8 @@ spec:
   selector:
     app: {{ $fullName }}-weatherservice
   type: ClusterIP
+  
+{{- if .Values.useNetworkPolicies -}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -65,3 +67,4 @@ spec:
     ports:
     - port: 9090
       protocol: TCP
+{{- end -}}
