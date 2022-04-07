@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: rabbitmq
-        image: rabbitmq:3.9-management
+        image: {{ .Values.images.rabbitmq.repository }}:{{ .Values.images.rabbitmq.tag }} 
+        imagePullPolicy: {{ .Values.images.rabbitmq.pullPolicy }}
         env:
         - name: RABBITMQ_DEFAULT_USER
           value: root

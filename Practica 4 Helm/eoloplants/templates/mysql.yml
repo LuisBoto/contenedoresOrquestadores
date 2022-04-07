@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:8.0.28
+        image: {{ .Values.images.mysql.repository }}:{{ .Values.images.mysql.tag }} 
+        imagePullPolicy: {{ .Values.images.mysql.pullPolicy }}
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: password

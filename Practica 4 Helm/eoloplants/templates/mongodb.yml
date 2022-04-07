@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo:5.0.6-focal
+        image: {{ .Values.images.mongo.repository }}:{{ .Values.images.mongo.tag }} 
+        imagePullPolicy: {{ .Values.images.mongo.pullPolicy }}
         env:
         - name: MONGO_INITDB_DATABASE
           value: topoDB

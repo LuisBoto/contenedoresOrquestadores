@@ -31,17 +31,41 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+images:
+  server:
+    repository: codeurjc/server
+    tag: "v1.0"
+    pullPolicy: IfNotPresent
+  planner:
+    repository: codeurjc/planner
+    tag: "v1.0"
+    pullPolicy: IfNotPresent
+  toposervice:
+    repository: codeurjc/toposervice
+    tag: "v1.0"
+    pullPolicy: IfNotPresent
+  weatherservice:
+    repository: codeurjc/weatherservice
+    tag: "v1.0"
+    pullPolicy: IfNotPresent
+  mongo:
+    repository: mongo
+    tag: "5.0.6-focal"
+    pullPolicy: IfNotPresent
+  mysql:
+    repository: mysql
+    tag: "8.0.28"
+    pullPolicy: IfNotPresent
+  rabbitmq:
+    repository: rabbitmq
+    tag: "3.9-management"
+    pullPolicy: IfNotPresent
+
 # Default values for eoloplants.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""

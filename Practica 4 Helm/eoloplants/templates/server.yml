@@ -21,7 +21,8 @@ spec:
       restartPolicy: Always
       containers:
       - name: server
-        image: codeurjc/server:v1.0
+        image: {{ .Values.images.server.repository }}:{{ .Values.images.server.tag }} 
+        imagePullPolicy: {{ .Values.images.server.pullPolicy }}
         command: ["bash"]
         args:
         - "-c"
