@@ -9,6 +9,8 @@ minikube addons enable ingress
 helm install releaseName folder
 ### Helm uninstall
 helm uninstall releaseName
+## Helm dry run
+helm install --debug --dry-run releaseName folder
 
 ## Okteto
 *okteto up*
