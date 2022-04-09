@@ -11,8 +11,9 @@ helm install releaseName folder
 helm uninstall releaseName
 
 ## Okteto
-okteto up
-okteto down
+*okteto up*
+
+*okteto down*
 
 ## Docker build
 docker build -t usuario/imagen .
