@@ -62,15 +62,15 @@ images:
     pullPolicy: IfNotPresent
 
 persistence:
-  useExistingVolumes: true
+  useExistingVolumes: false
   dinamicallyCreateVolumes: false
   mysql:
-    storageClass: mysql-storageClass
+    storageClass: mysql-storageclass
   mongo:
-    storageClass: mongo-storageClass
+    storageClass: mongo-storageclass
   rabbitmq:
-    storageClass: rabbitmq-storageClass
-  defaultStorageClassName: default-storageClass
+    storageClass: rabbitmq-storageclass
+  defaultStorageClassName: default-storageclass
 
 useNetworkPolicies: true
 
