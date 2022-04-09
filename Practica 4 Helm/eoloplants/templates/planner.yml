@@ -42,7 +42,7 @@ spec:
         - name: SPRING_RABBITMQ_PASSWORD
           value: password
 
-{{- if .Values.useNetworkPolicies -}}
+{{- if .Values.useNetworkPolicies }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

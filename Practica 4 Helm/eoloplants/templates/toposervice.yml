@@ -56,7 +56,7 @@ spec:
     app: {{ $fullName }}-toposervice
   type: {{ .Values.servicetopo.type }}
 
-{{- if .Values.useNetworkPolicies -}}
+{{- if .Values.useNetworkPolicies }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

@@ -1,6 +1,6 @@
-{{- if .Values.useNetworkPolicies -}}
+{{- if .Values.useNetworkPolicies }}
 ---
-{{- $fullName := include "eoloplants.fullname" . -}}
+{{- $fullName := include "eoloplants.fullname" . }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

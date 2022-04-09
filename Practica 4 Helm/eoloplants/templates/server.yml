@@ -58,7 +58,7 @@ spec:
     app: {{ $fullName }}-server
   type: {{ .Values.serviceserver.type }}
 
-{{- if .Values.useNetworkPolicies -}}
+{{- if .Values.useNetworkPolicies }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
