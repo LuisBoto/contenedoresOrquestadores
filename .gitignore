@@ -30,3 +30,4 @@ target/
 .classpath
 mongo/
 mysql/
+.stignore

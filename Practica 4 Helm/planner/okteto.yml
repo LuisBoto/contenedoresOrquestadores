@@ -1,5 +1,4 @@
 name: planner
-
 # The build section defines how to build the images of your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#build
 build:
@@ -12,7 +11,7 @@ build:
   planner:
     context: .
     dockerfile: Dockerfile
-    image: luisb493/plannerURJC
+    image: luisb493/planner:urjc
 
 # The deploy section defines how to deploy your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
@@ -40,4 +39,16 @@ deploy:
 #       - name=$USER
 #     forward:
 #       - 8080:80
+
+dev:
+  planner:
+    image: maven:3.8.5-openjdk-17
+    command:
+      - mvn
+      - spring-boot:run
+    volumes:
+      - /root/.m2 
+    forward:
+      - 8080:8080
+      - 5005:5005
 

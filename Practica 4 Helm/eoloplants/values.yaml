@@ -62,7 +62,7 @@ images:
     pullPolicy: IfNotPresent
 
 persistence:
-  useExistingVolumes: true
+  useExistingVolumes: false
   mysql:
     storageClass: mysql-storageclass
   mongo:
