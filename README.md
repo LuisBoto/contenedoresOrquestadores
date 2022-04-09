@@ -5,6 +5,15 @@ minikube start --cni=cilium --memory=4096 --driver=virtualbox
 ## Minikube enable ingress
 minikube addons enable ingress
 
+## Helm install
+helm install releaseName folder
+### Helm uninstall
+helm uninstall releaseName
+
+## Okteto
+okteto up
+okteto down
+
 ## Docker build
 docker build -t usuario/imagen .
 
@@ -15,4 +24,4 @@ mvn -N io.takari:maven:wrapper
 ## BuildPacks build
 pack build usuario/imagen --path . --builder gcr.io/buildpacks/builder:v1 
 
-//paketobuildpacks/builder:base **won't work**
+// paketobuildpacks/builder:base **won't work**
