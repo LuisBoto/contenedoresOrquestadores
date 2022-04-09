@@ -1,6 +1,7 @@
 {{- $fullName := include "eoloplants.fullname" . -}}
 {{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
-{{- if not $useExistingVolume -}}
+{{- $dinamicallyCreateVolume := (.Values.persistence.dinamicallyCreateVolumes) -}}
+{{- if and (not $useExistingVolume) (not $dinamicallyCreateVolume) -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
