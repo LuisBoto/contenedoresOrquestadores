@@ -54,7 +54,7 @@ spec:
     name: {{ $fullName }}-topo-port
   selector:
     app: {{ $fullName }}-toposervice
-  type: {{ .Values.servicetopo.type }}
+  type: {{ .Values.exposedServiceType }}
 
 {{- if .Values.useNetworkPolicies }}
 ---

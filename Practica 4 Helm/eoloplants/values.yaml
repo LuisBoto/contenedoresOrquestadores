@@ -1,11 +1,10 @@
 servicetopo:
-  type: ClusterIP
   port: 8181
   name: toposervice-service
 serviceserver:
-  type: ClusterIP
   port: 3000
   name: server-service
+exposedServiceType: ClusterIP
 
 ingress:
   enabled: true
@@ -63,14 +62,14 @@ images:
 
 persistence:
   useExistingVolumes: false
-  dinamicallyCreateVolumes: false
+  dinamicallyCreateVolumes: true
   mysql:
     storageClass: mysql-storageclass
   mongo:
     storageClass: mongo-storageclass
   rabbitmq:
     storageClass: rabbitmq-storageclass
-  defaultStorageClassName: default-storageclass
+  defaultStorageClassName: standard
 
 useNetworkPolicies: true
 

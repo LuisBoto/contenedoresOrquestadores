@@ -45,7 +45,7 @@ spec:
   {{- if $useExistingVolume }}
   storageClassName: {{ $fullName }}-{{ .Values.persistence.mysql.storageClass }}
   {{- else if $dinamicallyCreateVolume }}
-  storageClassName: {{ $fullName }}-{{ .Values.persistence.defaultStorageClassName }}
+  storageClassName: {{ .Values.persistence.defaultStorageClassName }}
   {{- else }}
   storageClassName: {{ $fullName }}-mysql
   {{- end }}
