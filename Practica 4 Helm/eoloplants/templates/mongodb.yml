@@ -1,5 +1,7 @@
 ---
 {{- $fullName := include "eoloplants.fullname" . -}}
+{{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
+{{- $dinamicallyCreateVolume := (.Values.persistence.dinamicallyCreateVolumes) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,7 +46,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ $fullName }}-mongo-pvc
 spec:
+  {{- if $useExistingVolume }}
+  storageClassName: {{ $fullName }}-{{ .Values.persistence.mongo.storageClass }}
+  {{- else if $dinamicallyCreateVolume }}
+  storageClassName: {{ .Values.persistence.defaultStorageClassName }}
+  {{- else }}
   storageClassName: {{ $fullName }}-mongo
+  {{- end }}
   accessModes:
   - ReadWriteOnce
   resources:

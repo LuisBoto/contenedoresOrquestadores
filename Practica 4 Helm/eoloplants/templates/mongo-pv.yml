@@ -1,4 +1,7 @@
 {{- $fullName := include "eoloplants.fullname" . -}}
+{{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
+{{- $dinamicallyCreateVolume := (.Values.persistence.dinamicallyCreateVolumes) -}}
+{{- if and (not $useExistingVolume) (not $dinamicallyCreateVolume) -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -11,3 +14,4 @@ spec:
     storage: 1Gi
   hostPath:
     path: /{{ $fullName }}/db/mongo
+{{- end -}}

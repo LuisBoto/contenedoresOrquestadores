@@ -1,5 +1,7 @@
 ---
 {{- $fullName := include "eoloplants.fullname" . -}}
+{{- $useExistingVolume := (.Values.persistence.useExistingVolumes) -}}
+{{- $dinamicallyCreateVolume := (.Values.persistence.dinamicallyCreateVolumes) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,7 +43,13 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ $fullName }}-rabbit-pvc
 spec:
+  {{- if $useExistingVolume }}
+  storageClassName: {{ $fullName }}-{{ .Values.persistence.rabbitmq.storageClass }}
+  {{- else if $dinamicallyCreateVolume }}
+  storageClassName: {{ .Values.persistence.defaultStorageClassName }}
+  {{- else }}
   storageClassName: {{ $fullName }}-rabbit
+  {{- end }}
   accessModes:
   - ReadWriteOnce
   resources:

@@ -7,7 +7,7 @@ serviceserver:
 exposedServiceType: ClusterIP
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -62,7 +62,7 @@ images:
 
 persistence:
   useExistingVolumes: false
-  dinamicallyCreateVolumes: true
+  dinamicallyCreateVolumes: false
   mysql:
     storageClass: mysql-storageclass
   mongo:
