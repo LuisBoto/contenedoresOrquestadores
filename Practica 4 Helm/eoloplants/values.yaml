@@ -4,7 +4,7 @@ servicetopo:
 serviceserver:
   port: 3000
   name: server-service
-exposedServiceType: ClusterIP
+exposedServiceType: LoadBalancer
 
 ingress:
   enabled: false
