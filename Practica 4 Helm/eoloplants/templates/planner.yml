@@ -10,11 +10,13 @@ spec:
   selector:
     matchLabels:
       app: {{ $fullName }}-planner
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
       labels:
         app: {{ $fullName }}-planner
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
         dns-policy: enabled
     spec:
       securityContext:
