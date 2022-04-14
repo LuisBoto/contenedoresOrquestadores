@@ -1,3 +1,7 @@
 apiVersion: v1
-entries: {}
+entries: 
+  eoloplants:
+  - name: eoloplants
+    urls:
+    - https://github.com/LuisBoto/contenedoresOrquestadores/raw/main/Practica%204%20Helm/eoloplants.tar.gz
 generated: "2022-04-14T16:52:24.208236971+02:00"
