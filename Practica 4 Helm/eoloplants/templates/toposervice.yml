@@ -10,11 +10,13 @@ spec:
   selector:
     matchLabels:
       app: {{ $fullName }}-toposervice
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
       labels:
         app: {{ $fullName }}-toposervice
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
         dns-policy: enabled
     spec:
       securityContext:
@@ -46,6 +48,7 @@ metadata:
   name: {{ $fullName }}-toposervice-service
   labels:
     app: {{ $fullName }}-toposervice
+    {{- include "eoloplants.selectorLabels" . | nindent 4 }}
 spec:
   ports:
   - port: {{ .Values.servicetopo.port }}

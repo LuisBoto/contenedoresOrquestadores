@@ -9,12 +9,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
       app: {{ $fullName }}-server
   replicas: 1
   template:
     metadata:
       labels:
         app: {{ $fullName }}-server
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
         dns-policy: enabled
     spec:
       securityContext:
@@ -48,6 +50,7 @@ metadata:
   name: {{ $fullName }}-server-service
   labels:
     app: {{ $fullName }}-server
+    {{- include "eoloplants.labels" . | nindent 4 }}
 spec:
   ports:
   - port: {{ .Values.serviceserver.port }}
