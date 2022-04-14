@@ -12,11 +12,13 @@ spec:
   selector:
     matchLabels:
       app: {{ $fullName }}-mysql
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
       labels:
         app: {{ $fullName }}-mysql
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ $fullName }}-mysql
@@ -61,6 +63,7 @@ metadata:
   name: {{ $fullName }}-mysql-service
   labels:
     app: {{ $fullName }}-mysql
+    {{- include "eoloplants.labels" . | nindent 4 }}
 spec:
   ports:
   - port: 3306

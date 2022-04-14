@@ -12,11 +12,13 @@ spec:
   selector:
     matchLabels:
       app: {{ $fullName }}-mongodb
+      {{- include "eoloplants.selectorLabels" . | nindent 6 }}
   replicas: 1
   template:
     metadata:
       labels:
         app: {{ $fullName }}-mongodb
+        {{- include "eoloplants.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ $fullName }}-mongodb
@@ -65,6 +67,7 @@ metadata:
   name: {{ $fullName }}-mongodb-service
   labels:
     app: {{ $fullName }}-mongodb
+    {{- include "eoloplants.labels" . | nindent 4 }}
 spec:
   ports:
   - port: 27017
