@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: luisb493/webgatos2-scalable:0.0.1
+        image: luisb493/webgatos:0.0.1
         env:
         - name: DATABASE_HOST
           value: db

@@ -88,7 +88,7 @@
 				<version>3.0.0</version>
 				<configuration>
 					<to>
-						<image>luisb493/webgatos2-scalable</image>
+						<image>luisb493/webgatos</image>
 						<tags>
 							<tag>0.0.1</tag>
 						</tags>

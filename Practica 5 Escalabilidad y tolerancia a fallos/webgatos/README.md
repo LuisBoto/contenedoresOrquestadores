@@ -7,7 +7,7 @@ Para hacer esto, hace uso de la sesión HttpSession proporcionada por el framewo
 Para construir la aplicación y publicarla en DockerHub se usa el plugin maven JIB con el comando:
 
 `
-$ mvn package
+$ mvn package -DskipTests
 `
 
 Para desplegar la aplicación en Kubernetes se usa el comando
