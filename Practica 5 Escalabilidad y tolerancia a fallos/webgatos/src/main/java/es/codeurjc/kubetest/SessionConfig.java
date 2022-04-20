@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.hazelcast.Hazelcast4IndexedSessionRepository;
 import org.springframework.session.hazelcast.Hazelcast4PrincipalNameExtractor;
-import org.springframework.session.hazelcast.config.annotation.SpringSessionHazelcastInstance;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
 import com.hazelcast.config.AttributeConfig;
@@ -19,7 +18,6 @@ import com.hazelcast.core.HazelcastInstance;
 public class SessionConfig {
 
 	@Bean
-	@SpringSessionHazelcastInstance
 	public HazelcastInstance hazelcastInstance() {
 		AttributeConfig attributeConfig = new AttributeConfig()
 				.setName(Hazelcast4IndexedSessionRepository.PRINCIPAL_NAME_ATTRIBUTE)
@@ -30,9 +28,7 @@ public class SessionConfig {
 		config.getMapConfig(Hazelcast4IndexedSessionRepository.DEFAULT_SESSION_MAP_NAME)
 				.addAttributeConfig(attributeConfig)
 				.addIndexConfig(
-						new IndexConfig()
-						.addAttribute(Hazelcast4IndexedSessionRepository.PRINCIPAL_NAME_ATTRIBUTE)
-						.setType(IndexType.HASH));
+						new IndexConfig(IndexType.HASH, Hazelcast4IndexedSessionRepository.PRINCIPAL_NAME_ATTRIBUTE));
 
 		return Hazelcast.newHazelcastInstance(config);
 	}
