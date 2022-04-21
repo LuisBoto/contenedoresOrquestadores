@@ -20,17 +20,6 @@ spec:
       containers:
       - name: webapp
         image: luisb493/webgatos:0.0.1
-        env:
-        - name: DATABASE_HOST
-          value: db
-        - name: DATABASE_PORT
-          value: "3306"
-        - name: MYSQL_ROOT_PASSWORD
-          value: pass
-        - name: DATABASE_SCHEMA
-          value: webapp_db
-        - name: DATABASE_PASS
-          value: password
 ---
 apiVersion: v1
 kind: Service
