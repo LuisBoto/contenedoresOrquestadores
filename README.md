@@ -5,6 +5,9 @@ istioctl install --set profile=demo -y
 
 kubectl label namespace default istio-injection=enabled
 
+## Artillery
+artillery run test.yml
+
 ## Minikube using cilium
 minikube start --cni=cilium --memory=4096 --driver=virtualbox
 ## Minikube enable ingress
