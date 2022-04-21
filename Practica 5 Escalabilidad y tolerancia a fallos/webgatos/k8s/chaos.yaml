@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaosmonkey
+  labels:
+    app: chaosmonkey
+spec:
+  selector:
+    matchLabels:
+      app: chaosmonkey
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: chaosmonkey
+      labels:
+        app: chaosmonkey
+    spec:
+      serviceAccountName: default-chaos-svc
+      containers:
+      - name: chaosmonkey
+        image: ghcr.io/jnewland/kubernetes-pod-chaos-monkey/kubernetes-pod-chaos-monkey:latest
+        
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: default-chaos-svc
+    namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+    name: chaos-role
+    namespace: default
+rules:
+    - apiGroups:
+        - ''
+      resources:
+        - 'pods'
+      verbs:
+        - 'create'
+        - 'delete'
+        - 'get'
+        - 'list'
+        - 'patch'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: chaos-rolebind
+subjects:
+    - kind: ServiceAccount
+      name: default-chaos-svc
+      namespace: default
+roleRef:
+    kind: Role
+    name: chaos-role
+    apiGroup: rbac.authorization.k8s.io
