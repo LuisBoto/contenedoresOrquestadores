@@ -31,3 +31,4 @@ target/
 mongo/
 mysql/
 .stignore
+istio*/
