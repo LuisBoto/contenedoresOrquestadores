@@ -7,6 +7,8 @@ istioctl install --set profile=demo -y
 
 kubectl label namespace default istio-injection=enabled
 
+kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+
 ## Artillery
 artillery run test.yml
 
