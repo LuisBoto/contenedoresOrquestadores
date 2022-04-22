@@ -30,4 +30,4 @@ spec:
         host: webapp
     retries:
       attempts: 3
-      perTryTimeout: 5s
+      perTryTimeout: 10s

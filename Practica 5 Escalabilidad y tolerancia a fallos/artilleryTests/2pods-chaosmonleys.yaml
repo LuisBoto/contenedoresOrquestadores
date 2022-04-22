@@ -1,6 +1,6 @@
 config:
-  target: "http://10.102.230.232:80/gatos"
-  timeout: 20
+  target: "http://10.101.101.36:80"
+  timeout: 30
   phases:
     - duration: 60
       arrivalRate: 5
