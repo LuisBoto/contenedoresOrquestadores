@@ -30,4 +30,5 @@ spec:
         host: webapp
     retries:
       attempts: 3
-      perTryTimeout: 10s
+      perTryTimeout: 20s
+      retryOn: gateway-error,connect-failure,refused-stream
